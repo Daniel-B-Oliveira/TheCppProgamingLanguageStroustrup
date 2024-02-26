@@ -1,0 +1,35 @@
+#include <iostream>
+#include <stack>
+
+namespace Stack
+{
+    struct Rep;                     // definition of stack layout is elsewhere
+    typedef Rep& stack;
+
+    stack create();                 // make a new stack
+    void destroy (stack s);         // delete s
+
+    void push (stack s, char c);    // push c onto s
+    char pop (stack s);
+
+    struct Bad_pop { };
+
+    void f()
+    {
+        Stack::stack s1 = Stack::create();      // make a new stack
+        Stack::stack s2 = Stack::create();      // make another new stack
+
+        Stack::push(s1, 'c');
+        Stack::push(s2, 'k');
+
+        if(Stack::pop(s1) != 'c') throw Bad_pop();
+        if(Stack::pop(s2) != 'k') throw Bad_pop();
+
+        Stack::destroy(s1);
+        Stack::destroy(s2);
+    }
+
+} // namespace Stack
+
+
+
